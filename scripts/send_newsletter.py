@@ -112,6 +112,7 @@ def render_content(template_path, variables):
 def send_via_wp_mail(site_config, recipient, subject, html_content):
     remote_path = site_config["remote_path"]
     from_header = site_config["from_header"]
+    site_key = site_config["key"]
     
     b64_subject = base64.b64encode(subject.encode("utf-8")).decode("utf-8")
     b64_body = base64.b64encode(html_content.encode("utf-8")).decode("utf-8")
@@ -123,9 +124,18 @@ $to = base64_decode('{b64_to}');
 $subject = base64_decode('{b64_subject}');
 $body = base64_decode('{b64_body}');
 $from = base64_decode('{b64_from}');
+
+// Generate secure 1-click unsubscribe URL
+$action_param = ('{site_key}' === 'buildstation') ? 'bs_action' : 'rsu_action';
+$token = hash_hmac('sha256', strtolower($to), wp_salt());
+$unsubscribe_url = add_query_arg(array($action_param => 'unsubscribe', 'email' => urlencode($to), 'token' => $token), home_url('/'));
+$body = str_replace('{{{{UNSUBSCRIBE_URL}}}}', esc_url($unsubscribe_url), $body);
+
 $headers = array(
     'Content-Type: text/html; charset=UTF-8',
-    'From: ' . $from
+    'From: ' . $from,
+    'List-Unsubscribe: <' . $unsubscribe_url . '>',
+    'List-Unsubscribe-Post: List-Unsubscribe=One-Click'
 );
 $result = wp_mail($to, $subject, $body, $headers);
 echo $result ? 'SUCCESS' : 'FAILED';

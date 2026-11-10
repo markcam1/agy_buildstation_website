@@ -3,7 +3,7 @@
  * Buildstation Theme Functions & Definitions
  *
  * @package Buildstation
- * @version 1.0.7
+ * @version 1.0.8
  */
 
 if (!defined('ABSPATH')) {
@@ -83,7 +83,7 @@ function buildstation_scripts() {
         'buildstation-style',
         get_stylesheet_uri(),
         array('buildstation-fonts'),
-        '1.0.7'
+        '1.0.8'
     );
 
     // Theme JavaScript
@@ -91,7 +91,7 @@ function buildstation_scripts() {
         'buildstation-js',
         get_template_directory_uri() . '/assets/js/main.js',
         array(),
-        '1.0.7',
+        '1.0.8',
         true
     );
 
@@ -239,14 +239,28 @@ function buildstation_render_subscribers_page() {
                         <th style="width: 50px;">#</th>
                         <th><?php esc_html_e('Email Address', 'buildstation'); ?></th>
                         <th style="width: 180px;"><?php esc_html_e('Date Subscribed', 'buildstation'); ?></th>
+                        <th style="width: 120px;"><?php esc_html_e('Actions', 'buildstation'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($subscribers as $index => $item) : ?>
+                    <?php foreach ($subscribers as $index => $item) : 
+                        $delete_url = wp_nonce_url(
+                            admin_url('admin-post.php?action=buildstation_delete_subscriber&email=' . urlencode($item['email'])),
+                            'buildstation_delete_subscriber'
+                        );
+                    ?>
                         <tr>
                             <td><?php echo $index + 1; ?></td>
                             <td><strong><?php echo esc_html($item['email']); ?></strong></td>
                             <td><?php echo esc_html($item['date'] ?? '-'); ?></td>
+                            <td>
+                                <a href="<?php echo esc_url($delete_url); ?>" 
+                                   class="button button-small" 
+                                   style="color: #b32d2e; border-color: #b32d2e;"
+                                   onclick="return confirm('<?php echo esc_js(sprintf(__('Remove %s from subscribers?', 'buildstation'), $item['email'])); ?>');">
+                                    <?php esc_html_e('Remove', 'buildstation'); ?>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -297,3 +311,119 @@ function buildstation_get_link($key, $default = '#') {
     }
     return get_theme_mod("buildstation_{$key}", $default);
 }
+
+/**
+ * Admin action: Delete a subscriber manually
+ */
+function buildstation_admin_delete_subscriber() {
+    if (!current_user_can('manage_options')) {
+        wp_die(__('Unauthorized', 'buildstation'));
+    }
+    check_admin_referer('buildstation_delete_subscriber');
+    $email = isset($_GET['email']) ? sanitize_email($_GET['email']) : '';
+    if ($email) {
+        $subscribers = get_option('buildstation_subscribers', array());
+        $updated = array();
+        foreach ($subscribers as $entry) {
+            $e = is_array($entry) ? ($entry['email'] ?? '') : $entry;
+            if (strtolower($e) !== strtolower($email)) {
+                $updated[] = $entry;
+            }
+        }
+        update_option('buildstation_subscribers', $updated, false);
+    }
+    wp_safe_redirect(admin_url('admin.php?page=buildstation-subscribers&deleted=1'));
+    exit;
+}
+add_action('admin_post_buildstation_delete_subscriber', 'buildstation_admin_delete_subscriber');
+
+/**
+ * 1-Click Unsubscribe Endpoint Handler
+ * Responds to: /?bs_action=unsubscribe&email={email}&token={token}
+ */
+function buildstation_handle_unsubscribe() {
+    if (!isset($_GET['bs_action']) || $_GET['bs_action'] !== 'unsubscribe') {
+        return;
+    }
+
+    $email = isset($_GET['email']) ? sanitize_email(urldecode($_GET['email'])) : '';
+    $token = isset($_GET['token']) ? sanitize_text_field($_GET['token']) : '';
+    $expected_token = hash_hmac('sha256', strtolower($email), wp_salt());
+    $is_valid = !empty($email) && hash_equals($expected_token, $token);
+    $was_removed = false;
+
+    if ($is_valid) {
+        $subscribers = get_option('buildstation_subscribers', array());
+        $updated = array();
+        if (is_array($subscribers)) {
+            foreach ($subscribers as $entry) {
+                $entry_email = is_array($entry) ? ($entry['email'] ?? '') : $entry;
+                if (strtolower($entry_email) === strtolower($email)) {
+                    $was_removed = true;
+                    continue;
+                }
+                $updated[] = $entry;
+            }
+        }
+        if ($was_removed) {
+            update_option('buildstation_subscribers', $updated, false);
+            $unsubscribed = get_option('buildstation_unsubscribed', array());
+            if (!is_array($unsubscribed)) {
+                $unsubscribed = array();
+            }
+            $unsubscribed[] = array(
+                'email' => $email,
+                'date'  => current_time('mysql'),
+                'ip'    => sanitize_text_field($_SERVER['REMOTE_ADDR'] ?? '')
+            );
+            update_option('buildstation_unsubscribed', $unsubscribed, false);
+        }
+    }
+
+    status_header(200);
+    nocache_headers();
+    ?>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title><?php esc_html_e('Unsubscribe — Buildstation', 'buildstation'); ?></title>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Roboto+Mono:wght@500;700&display=swap">
+      <style>
+        body { margin: 0; padding: 0; background: #0f172a; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; box-sizing: border-box; }
+        .card { max-width: 540px; margin: 24px; background: #0b1222; border: 1px solid #1e293b; border-radius: 8px; padding: 40px; box-sizing: border-box; }
+        .pill { font-family: 'Roboto Mono', monospace; font-size: 13px; font-weight: 700; color: #00ff41; display: inline-block; margin-bottom: 12px; }
+        h1 { font-family: 'Poppins', sans-serif; font-size: 28px; margin: 0 0 16px; color: #e2e8f0; line-height: 1.2; }
+        p { font-size: 16px; line-height: 1.6; color: #94a3b8; margin: 0 0 24px; }
+        .btn { display: inline-block; font-family: 'Roboto Mono', monospace; font-weight: 700; font-size: 14px; text-decoration: none; padding: 12px 20px; border-radius: 6px; }
+        .btn-home { background: #2563eb; color: #ffffff; margin-right: 12px; }
+        .btn-outline { border: 1px solid #94a3b8; color: #e2e8f0; }
+        .footer-note { margin-top: 32px; padding-top: 20px; border-top: 1px solid #1e293b; font-size: 13px; color: #64748b; font-family: 'Roboto Mono', monospace; }
+      </style>
+    </head>
+    <body>
+      <div class="card">
+        <?php if ($is_valid) : ?>
+          <span class="pill">[ ✓ UNSUBSCRIBE CONFIRMED ]</span>
+          <h1><?php esc_html_e('You have been unsubscribed', 'buildstation'); ?></h1>
+          <p><?php printf(esc_html__('We have removed %s from all Buildstation benchmark dispatches. You will receive no further emails.', 'buildstation'), '<strong>' . esc_html($email) . '</strong>'); ?></p>
+        <?php else : ?>
+          <span class="pill" style="color: #ef4444;">[ ! INVALID REQUEST ]</span>
+          <h1><?php esc_html_e('Unable to process unsubscribe', 'buildstation'); ?></h1>
+          <p><?php esc_html_e('The unsubscribe link is invalid or has expired. If you need help, please email dispatch@buildstationai.com to be removed immediately.', 'buildstation'); ?></p>
+        <?php endif; ?>
+        <div>
+          <a href="<?php echo esc_url(home_url('/')); ?>" class="btn btn-home">&larr; Return to Buildstation</a>
+          <a href="<?php echo esc_url(home_url('/#subscribe')); ?>" class="btn btn-outline"><?php esc_html_e('Resubscribe', 'buildstation'); ?></a>
+        </div>
+        <div class="footer-note">
+          SimpleInvest Digital LLC &middot; buildstationai.com
+        </div>
+      </div>
+    </body>
+    </html>
+    <?php
+    exit;
+}
+add_action('template_redirect', 'buildstation_handle_unsubscribe');
