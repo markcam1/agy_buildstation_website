@@ -1,0 +1,34 @@
+# Secrets & Environment
+.env
+.env.*
+!.env.example
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Archives & Distribution (keep repo clean)
+*.zip
+*.tar.gz
+
+# Node / Scratch / Logs
+node_modules/
+scratch/
+tmp/
+*.log
+logs/
+
+# Subscriber Data & Sensitive PII Documentation
+subscribers.csv
+subscribers.json
+subscribers_*.csv
+subscribers_*.json
+*.csv
+docs/*subscriber*
+docs/*pii*
+docs/subscriber_management.md

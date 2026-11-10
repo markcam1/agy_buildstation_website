@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800;900&family=Roboto+Mono:wght@500;700&family=Inter:wght@400;600&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0f172a;
+    color: #e2e8f0;
+    font-family: 'Roboto Mono', monospace;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  .grid-bg {
+    background-color: #0f172a;
+    background-image: 
+      linear-gradient(to right, rgba(30, 41, 59, 0.5) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(30, 41, 59, 0.5) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .bs-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #141e33;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+    color: #94a3b8;
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg" style="width: 2560px; height: 1440px; position: relative;">
+  <!-- TV Background subtle telemetry strings outside safe area -->
+  <div style="position: absolute; top: 100px; left: 160px; font-size: 16px; color: #3a4a5e; letter-spacing: 2px;">
+    BUILDSTATION // LOCAL AI BENCHMARKS // CONSUMER HARDWARE RIG // RTX 4060 Ti
+  </div>
+  <div style="position: absolute; bottom: 100px; right: 160px; font-size: 16px; color: #3a4a5e; letter-spacing: 2px;">
+    MEASURED RATHER THAN CLAIMED // ZERO DATACENTER HYPE // CODING AGENTS ON 16GB
+  </div>
+
+  <!-- Safe Area Guide Box (1546 x 424) centered at x: 507px, y: 508px -->
+  <div style="
+    position: absolute;
+    left: 507px;
+    top: 508px;
+    width: 1546px;
+    height: 424px;
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 44px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+  ">
+    <!-- Left Column: Typography, Terminal Pill, Channel Identity (~800px) -->
+    <div style="max-width: 790px; display: flex; flex-direction: column; justify-content: center; gap: 14px;">
+      
+      <!-- Terminal Prompt Pill (Buildstation signature) -->
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div class="bs-pill">
+          <span style="color: #00ff41; font-weight: 700;">$</span>
+          <code style="color: #e2e8f0;">./buildstation --harness aider,openhands,swe-agent --local-only</code>
+        </div>
+        <span style="font-family: 'Caveat', cursive; font-size: 22px; color: #94a3b8;">
+          // real hardware tests
+        </span>
+      </div>
+
+      <!-- Main Brand Name -->
+      <div style="display: flex; align-items: baseline; gap: 16px;">
+        <h1 style="
+          font-family: 'Poppins', sans-serif;
+          font-weight: 900;
+          font-size: 72px;
+          line-height: 0.95;
+          letter-spacing: -0.03em;
+          color: #e2e8f0;
+          margin: 0;
+        ">
+          BUILDSTATION<span style="color: #2563eb;">.</span>
+        </h1>
+        <span style="
+          font-family: 'Roboto Mono', monospace;
+          font-weight: 700;
+          font-size: 14px;
+          color: #2563eb;
+          letter-spacing: 2px;
+          border: 1px solid #2563eb;
+          padding: 3px 8px;
+          border-radius: 4px;
+        ">
+          LOCAL AI
+        </span>
+      </div>
+
+      <!-- Lead Headline with Constraint -->
+      <div style="
+        font-family: 'Poppins', sans-serif;
+        font-weight: 800;
+        font-size: 23px;
+        color: #e2e8f0;
+        line-height: 1.25;
+        letter-spacing: -0.01em;
+      ">
+        THE LEADERBOARD RAN ON AN H100. <span style="color: #94a3b8; font-weight: 600;">YOU HAVE</span> <span style="color: #2563eb; font-family: 'Roboto Mono', monospace;">16GB</span><span style="color: #94a3b8; font-weight: 600;">.</span>
+      </div>
+
+      <!-- Detail Subhead -->
+      <div style="font-family: 'Roboto Mono', monospace; font-size: 13px; color: #94a3b8; line-height: 1.5;">
+        Coding agents tested on small open-weight models: Aider, SWE-agent, AutoCodeRover. What actually runs on your workstation, measured rather than claimed.
+      </div>
+    </div>
+
+    <!-- Right Column: Excalidraw Sketchy Architecture Diagram (~630px) -->
+    <div style="width: 630px; height: 376px; display: flex; align-items: center; justify-content: flex-end;">
+      <svg viewBox="0 0 620 370" style="width: 100%; height: 100%; display: block;" role="img" aria-label="Buildstation Excalidraw local AI test harness">
+        <defs>
+          <!-- Electric Blue Hachure -->
+          <pattern id="bsHachBlue" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-40)">
+            <line x1="0" y1="0" x2="0" y2="8" stroke="#2563eb" stroke-width="1.6" opacity="0.65"></line>
+          </pattern>
+          <!-- Dark Slate Hachure -->
+          <pattern id="bsHachSlate" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+            <line x1="0" y1="0" x2="0" y2="8" stroke="#1e293b" stroke-width="2"></line>
+          </pattern>
+        </defs>
+
+        <!-- Box 1: Hardware Rig (Sketchy double stroke) -->
+        <g transform="translate(10, 30)">
+          <!-- Crosshatch Fill -->
+          <path d="M10 8 C 80 5, 170 9, 210 7 C 213 45, 209 85, 211 118 C 140 120, 70 117, 9 119 C 7 85, 11 45, 10 8" fill="url(#bsHachSlate)"></path>
+          <!-- Outer sketchy stroke -->
+          <path d="M10 8 C 80 5, 170 9, 210 7 C 213 45, 209 85, 211 118 C 140 120, 70 117, 9 119 C 7 85, 11 45, 10 8" fill="none" stroke="#2563eb" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+          <!-- Jittered inner stroke -->
+          <path d="M8 6 C 85 9, 175 6, 208 9 C 210 48, 212 88, 209 116 C 135 118, 65 119, 11 117 C 8 82, 9 42, 8 6" fill="none" stroke="#2563eb" stroke-width="1.3" stroke-linecap="round"></path>
+          <!-- Text -->
+          <text x="24" y="36" font-family="Roboto Mono, monospace" font-size="12" font-weight="700" fill="#2563eb">// WORKSTATION RIG</text>
+          <text x="24" y="66" font-family="Poppins, sans-serif" font-size="18" font-weight="900" fill="#e2e8f0">RTX 4060 Ti</text>
+          <text x="24" y="90" font-family="Caveat, cursive" font-size="20" font-weight="700" fill="#94a3b8">consumer hardware</text>
+          <text x="24" y="110" font-family="Roboto Mono, monospace" font-size="11" fill="#94a3b8">PCIe 4.0 · LINUX MINT</text>
+        </g>
+
+        <!-- Arrow: Rig -> Runtime -->
+        <g transform="translate(225, 80)">
+          <path d="M0 10 C 25 8, 45 12, 65 10" fill="none" stroke="#e2e8f0" stroke-width="2.2" stroke-linecap="round"></path>
+          <path d="M52 3 L 66 10 L 51 18" fill="none" stroke="#e2e8f0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+          <text x="4" y="-4" font-family="Caveat, cursive" font-size="16" font-weight="700" fill="#94a3b8">feeds local LLM</text>
+        </g>
+
+        <!-- Box 2: Local Runtime & Agent Harness -->
+        <g transform="translate(305, 30)">
+          <path d="M10 8 C 80 5, 180 9, 290 7 C 293 45, 289 85, 291 118 C 210 120, 110 117, 9 119 C 7 85, 11 45, 10 8" fill="url(#bsHachSlate)"></path>
+          <path d="M10 8 C 80 5, 180 9, 290 7 C 293 45, 289 85, 291 118 C 210 120, 110 117, 9 119 C 7 85, 11 45, 10 8" fill="none" stroke="#2563eb" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M8 6 C 85 9, 185 6, 288 9 C 290 48, 292 88, 289 116 C 205 118, 105 119, 11 117 C 8 82, 9 42, 8 6" fill="none" stroke="#2563eb" stroke-width="1.3" stroke-linecap="round"></path>
+          <!-- Content -->
+          <text x="24" y="36" font-family="Roboto Mono, monospace" font-size="12" font-weight="700" fill="#2563eb">// LOCAL RUNTIME</text>
+          <text x="24" y="66" font-family="Caveat, cursive" font-size="24" font-weight="700" fill="#e2e8f0">ollama · vllm · llama.cpp</text>
+          <text x="24" y="90" font-family="Roboto Mono, monospace" font-size="13" font-weight="700" fill="#94a3b8">Aider · OpenHands · SWE</text>
+          <text x="24" y="110" font-family="Roboto Mono, monospace" font-size="11" fill="#2563eb">ZERO API CALLS</text>
+        </g>
+
+        <!-- Downward Hand-Drawn Arrow to Hero Result -->
+        <g transform="translate(450, 155)">
+          <path d="M10 0 C 12 18, 8 32, 10 46" fill="none" stroke="#e2e8f0" stroke-width="2.2" stroke-linecap="round"></path>
+          <path d="M3 35 L 10 48 L 18 34" fill="none" stroke="#e2e8f0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+          <text x="22" y="28" font-family="Caveat, cursive" font-size="17" font-weight="700" fill="#94a3b8">measured result</text>
+        </g>
+
+        <!-- Bottom Hero Box: Single #00ff41 Element (Strict Buildstation Rule) -->
+        <g transform="translate(70, 215)">
+          <!-- Dark container fill -->
+          <path d="M10 8 C 160 5, 360 9, 520 7 C 523 45, 519 88, 521 128 C 360 130, 160 127, 9 129 C 7 90, 11 45, 10 8" fill="#09141f"></path>
+          <!-- Hand-drawn double green stroke -->
+          <path d="M10 8 C 160 5, 360 9, 520 7 C 523 45, 519 88, 521 128 C 360 130, 160 127, 9 129 C 7 90, 11 45, 10 8" fill="none" stroke="#00ff41" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M8 6 C 165 9, 365 6, 518 9 C 520 48, 522 92, 519 126 C 355 128, 155 129, 11 127 C 8 88, 9 42, 8 6" fill="none" stroke="#00ff41" stroke-width="1.3" stroke-linecap="round"></path>
+
+          <!-- Hero Number: 16GB VRAM (Single spotlight) -->
+          <text x="32" y="44" font-family="Roboto Mono, monospace" font-size="12" font-weight="700" fill="#94a3b8" letter-spacing="1">PRIMARY CONSTRAINT // ON THE MACHINE YOU OWN</text>
+          <text x="32" y="98" font-family="Roboto Mono, monospace" font-size="64" font-weight="700" fill="#00ff41" letter-spacing="-0.03em">16GB</text>
+          <text x="200" y="76" font-family="Poppins, sans-serif" font-size="20" font-weight="900" fill="#e2e8f0">VRAM FOOTPRINT</text>
+          <text x="200" y="102" font-family="Roboto Mono, monospace" font-size="13" font-weight="500" fill="#94a3b8">REAL NUMBERS. NO DATACENTER RENTING.</text>
+
+          <!-- Badge inside hero -->
+          <rect x="420" y="32" width="80" height="24" rx="4" fill="#141e33" stroke="#1e293b"></rect>
+          <text x="460" y="48" text-anchor="middle" font-family="Roboto Mono, monospace" font-size="11" font-weight="700" fill="#00ff41">LOCAL</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>
+</body>
+</html>
